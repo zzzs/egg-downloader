@@ -13,8 +13,9 @@ module.exports = {
     // this.set('Content-Type', 'text/js');
 
     const disposition = disposition || 'attachment';
-
-    this.set('Content-disposition', `attachment;filename=${filename}`); // 设置你的文件名
+    
+    this.attachment(filename);
+    // this.set('Content-disposition', `attachment;filename=${filename}`); // 设置你的文件名
 
     this.body = reader;
 
