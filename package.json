@@ -1,7 +1,7 @@
 {
-  "name": "egg-download",
+  "name": "egg-downloader",
   "version": "1.0.0",
-  "description": "download for egg",
+  "description": "extend a method context.downloader to download file for egg",
   "eggPlugin": {
     "name": "download"
   },

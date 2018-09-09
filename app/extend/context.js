@@ -8,13 +8,13 @@ const assert = require('assert');
 
 module.exports = {
   /**
-   * download file
+   * downloader file
    * @param  {string} file   文件路径
    * @param  {string} name   下载文件名（包含后缀）
    * @param  {object} header 头信息
    * @return {undefined} undefined
    */
-  download(file, name, header) {
+  downloader(file, name, header) {
     assert(file, 'file must be required');
     assert(is.string(file), `file must be string, but got ${file}`);
     try {
