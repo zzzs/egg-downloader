@@ -6,6 +6,19 @@ class HomeController extends Controller {
   async index() {
     this.ctx.body = 'hi, ' + this.app.plugins.download.name;
   }
+
+  async d1() {
+    this.ctx.download('./package.json');
+  }
+
+  async d2() {
+    this.ctx.download('package.json', 'new-name.json');
+  }
+
+  async d3() {
+    this.ctx.download('package.json', 'new-name.json', { 'x-token': '123' });
+  }
+
 }
 
 module.exports = HomeController;

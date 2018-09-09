@@ -9,20 +9,18 @@
 
 [npm-image]: https://img.shields.io/npm/v/egg-download.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/egg-download
-[travis-image]: https://img.shields.io/travis/eggjs/egg-download.svg?style=flat-square
-[travis-url]: https://travis-ci.org/eggjs/egg-download
-[codecov-image]: https://img.shields.io/codecov/c/github/eggjs/egg-download.svg?style=flat-square
-[codecov-url]: https://codecov.io/github/eggjs/egg-download?branch=master
-[david-image]: https://img.shields.io/david/eggjs/egg-download.svg?style=flat-square
-[david-url]: https://david-dm.org/eggjs/egg-download
+[travis-image]: https://img.shields.io/travis/zzzs/egg-download.svg?style=flat-square
+[travis-url]: https://travis-ci.org/zzzs/egg-download
+[codecov-image]: https://img.shields.io/codecov/c/github/zzzs/egg-download.svg?style=flat-square
+[codecov-url]: https://codecov.io/github/zzzs/egg-download?branch=master
+[david-image]: https://img.shields.io/david/zzzs/egg-download.svg?style=flat-square
+[david-url]: https://david-dm.org/zzzs/egg-download
 [snyk-image]: https://snyk.io/test/npm/egg-download/badge.svg?style=flat-square
 [snyk-url]: https://snyk.io/test/npm/egg-download
 [download-image]: https://img.shields.io/npm/dm/egg-download.svg?style=flat-square
 [download-url]: https://npmjs.org/package/egg-download
 
-<!--
-Description here.
--->
+extend a method `context.download` to download file
 
 ## Install
 
@@ -40,23 +38,35 @@ exports.download = {
 };
 ```
 
-## Configuration
-
-```js
-// {app_root}/config/config.default.js
-exports.download = {
-};
-```
-
-see [config/config.default.js](config/config.default.js) for more detail.
+## Features
+`context.download`用于提供文件下载的功能，支持三个参数，context.download(file, [name], [header]) 
+  
+  * file: 必选，文件路径
+  * name: 可选，下载文件名（包含后缀）
+  * header: 可选，附加头信息
 
 ## Example
-
-<!-- example here -->
+```js
+// {app_root}/controller/home.js
+const Controller = require('egg').Controller;
+class HomeController extends Controller {
+  async index() {
+    // 下载为 package.json
+    this.ctx.download('./package.json');
+    
+    // 下载为 new-name.json
+    // this.ctx.download('package.json', 'new-name.json');
+    
+    // 下载为 new-name.json header: X-Token: 123
+    // this.ctx.download('package.json', 'new-name.json', { 'x-token': '123' });
+  }
+}
+module.exports = HomeController;
+```
 
 ## Questions & Suggestions
 
-Please open an issue [here](https://github.com/eggjs/egg/issues).
+Please open an issue [here](https://github.com/zzzs/egg-download/issues).
 
 ## License
 

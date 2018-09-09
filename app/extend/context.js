@@ -1,3 +1,5 @@
+'use strict';
+
 // app/extend/context.js
 const fs = require('fs');
 const basename = require('path').basename;
@@ -6,15 +8,15 @@ const assert = require('assert');
 
 module.exports = {
   download(file, name, header) {
-    assert(file, 'this parameter: file is required');
+    assert(file, 'file must be required');
     assert(is.string(file), `file must be string, but got ${file}`);
     try {
-      fs.accessSync(file, fs.constants.F_OK | fs.constants.R_OK);
+      fs.accessSync(file, fs.constants.F_OK);
     } catch (err) {
-      throw new Error(`${file} ${err.code === 'ENOENT' ? 'does not exist' : 'error'}`);
+      throw new Error(`${file} does not exist`);
     }
 
-    let reader = fs.createReadStream(file);
+    const reader = fs.createReadStream(file);
     let filename = basename(file);
 
     // name
@@ -41,7 +43,7 @@ module.exports = {
     }
 
     this.body = reader;
-  }
+  },
 };
 
 function ucfirst(str) {
