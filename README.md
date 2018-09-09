@@ -21,7 +21,7 @@
 [download-image]: https://img.shields.io/npm/dm/egg-downloader.svg?style=flat-square
 [download-url]: https://npmjs.org/package/egg-downloader
 
-extend a method `context.downloader` to download file
+extend a method `ctx.downloader` to download file
 
 ## Install
 
@@ -40,7 +40,7 @@ exports.downloader = {
 ```
 
 ## Features
-`context.downloader`用于提供文件下载的功能，支持三个参数，context.download(file, [name], [header]) 
+`ctx.downloader`用于提供文件下载的功能，支持三个参数，ctx.download(file, [name], [header]) 
   
   * file: 必选，文件路径
   * name: 可选，下载文件名（包含后缀）
@@ -58,7 +58,7 @@ class HomeController extends Controller {
     // 下载为 new-name.json
     // this.ctx.downloader('package.json', 'new-name.json');
     
-    // 下载为 new-name.json header: X-Token: 123
+    // 下载为 new-name.json, header: X-Token: 123
     // this.ctx.downloader('package.json', 'new-name.json', { 'x-token': '123' });
   }
 }
