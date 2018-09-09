@@ -28,7 +28,7 @@ describe('test/download.test.js', () => {
   describe('case: exception', () => {
     it('file must be required', () => {
       try {
-        app.mockContext().download();
+        app.mockContext().downloader();
         throw new Error('another exception');
       } catch (err) {
         assert(err.message.includes('file must be required'));
@@ -37,7 +37,7 @@ describe('test/download.test.js', () => {
 
     it('file must be string', () => {
       try {
-        app.mockContext().download(123);
+        app.mockContext().downloader(123);
         throw new Error('another exception');
       } catch (err) {
         assert(err.message.includes('file must be string, but got'));
@@ -46,7 +46,7 @@ describe('test/download.test.js', () => {
 
     it('file must be exist', () => {
       try {
-        app.mockContext().download('./package2.json');
+        app.mockContext().downloader('./package2.json');
         throw new Error('another exception');
       } catch (err) {
         assert(err.message.includes('does not exist'));
@@ -55,7 +55,7 @@ describe('test/download.test.js', () => {
 
     it('name must be string', () => {
       try {
-        app.mockContext().download('./package.json', 123);
+        app.mockContext().downloader('./package.json', 123);
         throw new Error('another exception');
       } catch (err) {
         assert(err.message.includes('name must be string, but got'));
@@ -64,7 +64,7 @@ describe('test/download.test.js', () => {
 
     it('header must be object', () => {
       try {
-        app.mockContext().download('./package.json', 'newname.json', 123);
+        app.mockContext().downloader('./package.json', 'newname.json', 123);
         throw new Error('another exception');
       } catch (err) {
         assert(err.message.includes('header must be object, but got'));
@@ -73,7 +73,7 @@ describe('test/download.test.js', () => {
 
     it('header item must be string', () => {
       try {
-        app.mockContext().download('./package.json', 'newname.json', { 'x-token': 123 });
+        app.mockContext().downloader('./package.json', 'newname.json', { 'x-token': 123 });
         throw new Error('another exception');
       } catch (err) {
         assert(err.message.includes('header item must be string, but got'));
