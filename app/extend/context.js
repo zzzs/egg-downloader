@@ -8,38 +8,40 @@ module.exports = {
   download(file, name, header) {
     assert(file, 'this parameter: file is required');
     assert(is.string(file), `file must be string, but got ${file}`);
-    fs.access(file, fs.constants.F_OK | fs.constants.R_OK, (err) => {
-      if (err) {
-        throw new Error(`${file} ${err.code === 'ENOENT' ? 'does not exist' : 'is not readable'}`);
-      } else {
-        let reader = fs.createReadStream(file);
-        let filename = basename(file);
+    try {
+      fs.accessSync(file, fs.constants.F_OK | fs.constants.R_OK);
+    } catch (err) {
+      throw new Error(`${file} ${err.code === 'ENOENT' ? 'does not exist' : 'error'}`);
+    }
 
-        // name
-        if (name) {
-          assert(is.string(name), `name must be string, but got ${name}`);
-          filename = name;
-        }
+    let reader = fs.createReadStream(file);
+    let filename = basename(file);
 
-        this.attachment(filename);
+    // name
+    if (name) {
+      assert(is.string(name), `name must be string, but got ${name}`);
+      filename = name;
+    }
 
-        // header
-        if (header) {
-          assert(is.object(header), `header must be header, but got ${header}`);
+    this.attachment(filename);
 
-          let item;
-          for (let key in header) {
-            item = header[key];
-            // 首字母大写
-            key = key.split('-').map(ucfirst).join('-');
-            this.set(key, item);
-          }
-        }
+    // header
+    if (header) {
+      assert(is.object(header), `header must be object, but got ${header}`);
 
-        this.body = reader;
+      let item;
+      for (let key in header) {
+        assert(is.string(header[key]), `header item must be string, but got ${header[key]}`);
+        item = header[key];
+
+        // 首字母大写
+        key = key.split('-').map(ucfirst).join('-');
+        this.set(key, item);
       }
-    });
-  },
+    }
+
+    this.body = reader;
+  }
 };
 
 function ucfirst(str) {
