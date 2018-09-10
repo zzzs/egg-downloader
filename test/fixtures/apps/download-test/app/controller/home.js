@@ -8,15 +8,19 @@ class HomeController extends Controller {
   }
 
   async d1() {
-    this.ctx.downloader('./package.json');
+    await this.ctx.downloader('./package.json');
   }
 
   async d2() {
-    this.ctx.downloader('package.json', 'new-name.json');
+    await this.ctx.downloader('test.txt');
   }
 
   async d3() {
-    this.ctx.downloader('package.json', 'new-name.json', { 'x-token': '123' });
+    await this.ctx.downloader('./package.json', 'new-name.json');
+  }
+
+  async d4() {
+    await this.ctx.downloader('./package.json', 'new-name.json', { 'x-token': '123' });
   }
 
 }

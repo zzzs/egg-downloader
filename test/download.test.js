@@ -26,57 +26,66 @@ describe('test/download.test.js', () => {
   });
 
   describe('case: exception', () => {
-    it('file must be required', () => {
+    it('file must be required', async () => {
       try {
-        app.mockContext().downloader();
+        await app.mockContext().downloader();
         throw new Error('another exception');
       } catch (err) {
-        assert(err.message.includes('file must be required'));
+        assert(err.message.includes('the file must be required'));
       }
     });
 
-    it('file must be string', () => {
+    it('file must be string', async () => {
       try {
-        app.mockContext().downloader(123);
+        await app.mockContext().downloader(123);
         throw new Error('another exception');
       } catch (err) {
-        assert(err.message.includes('file must be string, but got'));
+        assert(err.message.includes('the file must be string, but got'));
       }
     });
 
-    it('file must be exist', () => {
+    it('file must be exist', async () => {
       try {
-        app.mockContext().downloader('./package2.json');
+        await app.mockContext().downloader('./package2.json');
         throw new Error('another exception');
       } catch (err) {
         assert(err.message.includes('does not exist'));
       }
     });
 
-    it('name must be string', () => {
+    it('file must be a file', async () => {
       try {
-        app.mockContext().downloader('./package.json', 123);
+        await app.mockContext().downloader('./test');
         throw new Error('another exception');
       } catch (err) {
-        assert(err.message.includes('name must be string, but got'));
+        assert(err.message.includes('the file must be a file, but'));
       }
     });
 
-    it('header must be object', () => {
+    it('name must be string', async () => {
       try {
-        app.mockContext().downloader('./package.json', 'newname.json', 123);
+        await app.mockContext().downloader('./package.json', 123);
         throw new Error('another exception');
       } catch (err) {
-        assert(err.message.includes('header must be object, but got'));
+        assert(err.message.includes('the name must be string, but got'));
       }
     });
 
-    it('header item must be string', () => {
+    it('header must be object', async () => {
       try {
-        app.mockContext().downloader('./package.json', 'newname.json', { 'x-token': 123 });
+        await app.mockContext().downloader('./package.json', 'newname.json', 123);
         throw new Error('another exception');
       } catch (err) {
-        assert(err.message.includes('header item must be string, but got'));
+        assert(err.message.includes('the header must be object, but got'));
+      }
+    });
+
+    it('header item must be string', async () => {
+      try {
+        await app.mockContext().downloader('./package.json', 'newname.json', { 'x-token': 123 });
+        throw new Error('another exception');
+      } catch (err) {
+        assert(err.message.includes('the header item must be string, but got'));
       }
     });
   });
@@ -89,16 +98,23 @@ describe('test/download.test.js', () => {
         .expect(200);
     });
 
-    it('download with new-name.json', () => {
+    it('download with test.txt', () => {
       return app.httpRequest()
         .get('/d2')
+        .expect('Content-Disposition', 'attachment; filename="test.txt"')
+        .expect(200);
+    });
+
+    it('download with new-name.json', () => {
+      return app.httpRequest()
+        .get('/d3')
         .expect('Content-Disposition', 'attachment; filename="new-name.json"')
         .expect(200);
     });
 
     it('download with header setting', () => {
       return app.httpRequest()
-        .get('/d3')
+        .get('/d4')
         .expect('Content-Disposition', 'attachment; filename="new-name.json"')
         .expect('X-Token', '123')
         .expect(200);

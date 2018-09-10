@@ -5,6 +5,6 @@
  * @member Config#download
  * @property {String} SOME_KEY - some description
  */
-exports.download = {
-
+exports.downloader = {
+  content_type: 'application/octet-stream',
 };

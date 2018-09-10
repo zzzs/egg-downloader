@@ -44,7 +44,9 @@ exports.downloader = {
   
   * file: 必选，文件路径
   * name: 可选，下载文件名（包含后缀）
-  * header: 可选，附加头信息
+  * header: 可选，附加头信息, 并且header会改为全部小写（感谢[天猪](https://github.com/atian25)的建议：egg 推荐 header 全部小写，会有一定的性能提升）。
+
+> 如果 file 是个不带路径的文件，将默认视为下载 app/public/file 。
 
 ## Example
 ```js
