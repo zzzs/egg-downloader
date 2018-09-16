@@ -3,7 +3,7 @@
   "version": "1.0.3",
   "description": "extend a method context.downloader to download file for egg",
   "eggPlugin": {
-    "name": "download"
+    "name": "downloader"
   },
   "keywords": [
     "egg",
