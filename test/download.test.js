@@ -21,7 +21,7 @@ describe('test/download.test.js', () => {
   it('should GET /', () => {
     return app.httpRequest()
       .get('/')
-      .expect('hi, download')
+      .expect('hi, downloader')
       .expect(200);
   });
 
